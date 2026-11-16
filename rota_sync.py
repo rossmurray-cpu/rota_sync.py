@@ -3,7 +3,7 @@
 
 Pure local logic - no network. Reads two files that the scheduled task fetches:
   --items   one or more JSON files from monday get_board_items_page (today's items,
-            columns lookup_mkq5h5wt [Core] and text_mm8k3xhd [Belfast Associate])
+            columns lookup_mkq5h5wt [Core or Core US] and text_mm8k3xhd [Belfast Associate])
   --roster  JSON of the NMD News Rota artifact doc state/roster
             (data.eu[N][Day] / data.us[N][Day], N = 1..6, Day = Mon..Fri)
 
@@ -50,7 +50,7 @@ def load_items(paths):
                 "id": str(it["id"]),
                 "name": it.get("name", ""),
                 "created": datetime.datetime.fromisoformat(it["created_at"].replace("Z", "+00:00")),
-                "core": (cv.get(CORE_COL) or "").strip() == "Core",
+                "core": (cv.get(CORE_COL) or "").strip() in ("Core", "Core US"),
                 "current": (cv.get(COL) or "").strip(),
             })
     out.sort(key=lambda i: (i["created"], int(i["id"])))
